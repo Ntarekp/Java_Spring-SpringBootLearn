@@ -1,6 +1,6 @@
 package org.kaiLearn.spring.core;
 
-public interface Vehicle {
+public interface  Vehicle {
 
     void move();
 }

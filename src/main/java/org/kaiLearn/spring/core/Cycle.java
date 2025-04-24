@@ -1,5 +1,8 @@
 package org.kaiLearn.spring.core;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Cycle implements Vehicle{
 
     @Override
