@@ -1,5 +1,9 @@
 package org.kaiLearn.spring.core.di;
 
+
+import org.springframework.stereotype.Component;
+
+@Component("smsService")
 public class SMSService implements MessageService {
 
     @Override

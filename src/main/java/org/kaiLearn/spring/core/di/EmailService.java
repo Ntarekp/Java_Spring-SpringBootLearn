@@ -1,5 +1,8 @@
 package org.kaiLearn.spring.core.di;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmailService implements MessageService  {
 
 
