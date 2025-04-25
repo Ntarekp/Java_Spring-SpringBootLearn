@@ -17,7 +17,6 @@ public class MessageSender {
     */
     private MessageService messageService;
 
-
     public MessageSender(@Qualifier("emailService") MessageService messageService){
         this.messageService = messageService;
         System.out.println("Statement Given when we explicitly set to use emailService only");
