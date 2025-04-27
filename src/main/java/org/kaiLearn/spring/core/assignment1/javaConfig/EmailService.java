@@ -1,4 +1,4 @@
-package org.kaiLearn.spring.core.assignment1;
+package org.kaiLearn.spring.core.assignment1.javaConfig;
 
 import org.springframework.stereotype.Component;
 
