@@ -1,4 +1,4 @@
-package org.kaiLearn.spring.core.assignment1;
+package org.kaiLearn.spring.core.assignment1.AnnotationConfig;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

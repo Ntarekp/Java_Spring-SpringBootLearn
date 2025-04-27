@@ -1,4 +1,4 @@
-package org.kaiLearn.spring.core.assignment1.javaConfig;
+package org.kaiLearn.spring.core.assignment1.AnnotationConfig;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

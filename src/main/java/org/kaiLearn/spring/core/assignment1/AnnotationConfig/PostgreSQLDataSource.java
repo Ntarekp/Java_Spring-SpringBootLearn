@@ -1,11 +1,11 @@
-package org.kaiLearn.spring.core.assignment1.javaConfig;
+package org.kaiLearn.spring.core.assignment1.AnnotationConfig;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
 @Primary
-public class PostgreSQLDataSource implements DataSource {
+public class PostgreSQLDataSource implements DataSource{
 
     @Override
     public String[] getEmails() {

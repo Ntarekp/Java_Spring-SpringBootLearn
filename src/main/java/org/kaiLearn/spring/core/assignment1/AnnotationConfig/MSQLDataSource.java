@@ -1,9 +1,9 @@
-package org.kaiLearn.spring.core.assignment1.javaConfig;
+package org.kaiLearn.spring.core.assignment1.AnnotationConfig;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class MSQLDataSource implements DataSource {
+public class MSQLDataSource implements DataSource{
     @Override
     public String[] getEmails() {
         String[] emails ={
