@@ -70,4 +70,13 @@ public class StudentController {
         System.out.println(student.getLastName());
         return  student;
     }
+
+    //SpringBOOT REST API that handles the http DELETE Request - Deleting the existing resource
+
+    @DeleteMapping("student/{id}/delete")
+    public String deleteStudent(@PathVariable("id") int  StudentId){
+        System.out.println(StudentId );
+        return "Student Successfully Deleted";
+    }
+
 }
