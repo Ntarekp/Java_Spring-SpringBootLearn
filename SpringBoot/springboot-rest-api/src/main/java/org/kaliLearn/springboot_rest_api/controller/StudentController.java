@@ -2,6 +2,7 @@ package org.kaliLearn.springboot_rest_api.controller;
 
 import org.kaliLearn.springboot_rest_api.bean.Student;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,9 +13,18 @@ public class StudentController {
 
     //http://localhost:8080/student
     @GetMapping("student")
-    public Student getStudent(){
-        Student student = new Student(1, "Kaitare", "Prince");
-        return student;
+    public ResponseEntity<Student> getStudent(){
+        Student student = new Student(
+                1,
+                "Kaitare",
+                "Prince"
+        );
+        //return new ResponseEntity<>(student, HttpStatus.OK);
+        //return ResponseEntity.ok(student);
+        return ResponseEntity.ok()
+                .header("custom-header", "Princess")
+                .body(student);
+
     }
 
     @GetMapping("students")
