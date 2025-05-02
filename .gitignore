@@ -36,3 +36,28 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore IDE settings
+.idea/
+*.iml
+
+# Ignore build files
+target/
+build/
+
+# Ignore logs and OS files
+*.log
+*.class
+*.DS_Store
+Thumbs.db
+
+# Ignore dependency directories
+node_modules/
+.gradle/
+.mvn/
+
+# Ignore environment files
+.env
+
+# Ignore PDF, if not needed in Git
+*.pdf
