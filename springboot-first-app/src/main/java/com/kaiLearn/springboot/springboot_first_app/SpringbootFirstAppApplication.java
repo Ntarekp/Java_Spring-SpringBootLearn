@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Bean;
 public class SpringbootFirstAppApplication {
 
 	@Bean
-	 public HelloWorld helloWorld(){
-		 return new HelloWorld();
-	 }
-	public static void main(String[] args) {
-	ApplicationContext applicationContext = SpringApplication.run(SpringbootFirstAppApplication.class, args);
-	HelloWorld helloWorld = applicationContext.getBean(HelloWorld.class);
+	public HelloWorld helloWorld(){
+		return new HelloWorld();
+	}
+	public static void  main(String[] args){
+		ApplicationContext applicationContext = SpringApplication.run(SpringbootFirstAppApplication.class, args);
+		HelloWorld helloWorld = applicationContext.getBean(HelloWorld.class);
 		System.out.println(helloWorld.helloWorld());
 	}
 
