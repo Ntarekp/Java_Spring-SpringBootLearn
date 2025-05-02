@@ -19,7 +19,7 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping(" ")
+    @GetMapping("students")
     public List<Student> getStudents(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1, "Tuyi","Shime"));
@@ -39,11 +39,15 @@ public class StudentController {
     }
 
     // Springboot Request API with request parameter.
-    //http://localhost:8080/students/query?id=1 // this is a querry parameter
+    //http://localhost:8080/students/query?id=1&firstName=Kaitare&lastName=Prince
+    // this is a querry parameter
 
     @GetMapping("students/query")
-    public Student studentRequestVariable(@RequestParam int id){
-        return new Student(id, "Ntare", "Prince");
+    public Student studentRequestVariable(@RequestParam int id,
+                                          @RequestParam String firstName,
+                                          @RequestParam String lastName
+    ){
+        return new Student(id, firstName,lastName);
 
     }
 }
