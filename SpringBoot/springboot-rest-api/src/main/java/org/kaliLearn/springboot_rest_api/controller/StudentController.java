@@ -3,6 +3,7 @@ package org.kaliLearn.springboot_rest_api.controller;
 import org.kaliLearn.springboot_rest_api.bean.Student;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -29,9 +30,20 @@ public class StudentController {
 
     //Spring BOOT API with Path Variable
     //{id} -- means URI template variable ex:
-    //http://localhost:8080/students/1
-    @GetMapping("students/{id}")
-    public Student studentPathVariable(@PathVariable("id") int StudentId){
-        return  new Student(StudentId,"kaitare", "Prince");
+    //http://localhost:8080/students/1/kaitare/prince
+    @GetMapping("students/{id}/{first-name}/{last-name}")
+    public Student studentPathVariable(@PathVariable("id") int StudentId,
+                                       @PathVariable("first-name") String firstName,
+                                       @PathVariable("last-name") String lastName){
+        return  new Student(StudentId,lastName,firstName);
+    }
+
+    // Springboot Request API with request parameter.
+    //http://localhost:8080/students/query?id=1 // this is a querry parameter
+
+    @GetMapping("students/query")
+    public Student studentRequestVariable(@RequestParam int id){
+        return new Student(id, "Ntare", "Prince");
+
     }
 }
