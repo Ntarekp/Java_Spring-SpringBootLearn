@@ -49,7 +49,7 @@ public class StudentController {
 
     }
 
-    //Spring boot REST API that handles HTTP POST Request
+    //Spring boot REST API that handles HTTP POST Request - Create a new Resource
 
     //@PostMapping and @RequestBody
 
@@ -60,5 +60,14 @@ public class StudentController {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
         return student;
+    }
+
+
+    //SpringBoot REST API that handles http PUT request that updates the existing
+    @PutMapping("Students/{id}/update")
+    public Student updateStudent(@RequestBody Student student, @PathVariable("id") int studentId){
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return  student;
     }
 }
