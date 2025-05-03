@@ -14,7 +14,7 @@ import java.util.List;
 public class StudentController {
 
     //http://localhost:8080/student
-    @GetMapping
+    @GetMapping("student")
     public ResponseEntity<Student> getStudent(){
         Student student = new Student(
                 1,
