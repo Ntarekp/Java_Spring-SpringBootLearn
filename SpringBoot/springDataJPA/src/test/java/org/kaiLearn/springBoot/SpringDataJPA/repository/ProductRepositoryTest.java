@@ -114,4 +114,11 @@ class ProductRepositoryTest {
       long count = productRepository.count();
       System.out.println(count);
    }
+
+   @Test
+   void existsByIdMethod(){
+      Long id = 1L;
+      boolean result = productRepository.existsById(id);
+      System.out.println(result);
+   }
 }
