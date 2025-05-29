@@ -3,6 +3,7 @@ package org.kaiLearn.springBoot.SpringDataJPA.repository;
 import org.kaiLearn.springBoot.SpringDataJPA.domain_entity_model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,4 +64,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
        Product findDistinctByName(String name);
 
 
+       /*
+       * Return products whose price is greater than given price as method parameter
+       *
+        */
+       List<Product> findByPriceGreaterThan(BigDecimal price);
 }

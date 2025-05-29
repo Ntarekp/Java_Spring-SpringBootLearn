@@ -7,6 +7,7 @@ import org.kaiLearn.springBoot.SpringDataJPA.domain_entity_model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,5 +56,14 @@ public class QueryMethodsTest {
         Product product = productRepository.findDistinctByName("product 1");
         System.out.println(product.getId());
         System.out.println(product.getName());
+    }
+
+    @Test
+    void findByPriceGreaterThanMethod(){
+        List<Product> products = productRepository.findByPriceGreaterThan(new BigDecimal(10));
+        products.forEach((p)->{
+            System.out.println(p.getId());
+            System.out.println(p.getName());
+        });
     }
 }
