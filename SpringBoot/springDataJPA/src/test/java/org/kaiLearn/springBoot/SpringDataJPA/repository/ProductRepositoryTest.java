@@ -121,4 +121,5 @@ class ProductRepositoryTest {
       boolean result = productRepository.existsById(id);
       System.out.println(result);
    }
+
 }

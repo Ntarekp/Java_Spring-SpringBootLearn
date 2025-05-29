@@ -4,6 +4,7 @@ import org.kaiLearn.springBoot.SpringDataJPA.domain_entity_model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,9 +65,51 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
        Product findDistinctByName(String name);
 
 
-       /*
-       * Return products whose price is greater than given price as method parameter
-       *
-        */
+       /**
+        * Retrieves a list of products whose price is greater than the specified price.
+        *
+        * @param price The minimum price threshold (exclusive) to filter products by.
+        * @return A list of products with prices greater than the specified price. Returns an empty list if none are found.
+       */
        List<Product> findByPriceGreaterThan(BigDecimal price);
+
+       /**
+        * Retrieves a list of products whose price is less than the specified price.
+        *
+        * @param price The maximum price threshold (exclusive) to filter products by.
+        * @return A list of products with prices less than the specified price. Returns an empty list if none are found.
+        */
+       List<Product> findByPriceLessThan(BigDecimal price);
+
+       /**
+        * Retrieves a list of products whose names contain the specified string.
+        * This method performs a case-sensitive partial match on the product name.
+        *
+        * @param name The substring to search for within product names.
+        * @return A list of products whose names contain the specified string. Returns an empty list if none are found.
+        */
+       List<Product> findByNameContaining(String name);
+
+       /**
+        * Retrieves a list of products whose names match the pattern specified by the 'name' parameter.
+        * The pattern can include SQL wildcard characters (% for any sequence of characters, _ for a single character).
+        *
+        * @param name The pattern to match against product names (e.g., "prod%" would match all names starting with "prod").
+        * @return A list of products whose names match the pattern. Returns an empty list if none are found.
+        */
+       List<Product> findByNameLike(String name);
+
+
+       /**
+        * Retrieves a list of products whose price falls within the specified range (inclusive).
+        *
+        * @param startPrice The lower bound of the price range.
+        * @param endPrice   The upper bound of the price range.
+        * @return A list of products with prices between the specified range (inclusive). Returns an empty list if none are found.
+        */
+       List<Product> findByPriceBetween(BigDecimal startPrice, BigDecimal endPrice);
+
+       List<Product> findByDateCreatedBetween(LocalDateTime startDate, LocalDateTime endDate);
+       List<Product> findNameIn(List<String> names);
+
 }
