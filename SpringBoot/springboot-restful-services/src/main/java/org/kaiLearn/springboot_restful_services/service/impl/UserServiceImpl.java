@@ -1,13 +1,18 @@
 package org.kaiLearn.springboot_restful_services.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.kaiLearn.springboot_restful_services.entity.User;
 import org.kaiLearn.springboot_restful_services.repository.UserRepository;
 import org.kaiLearn.springboot_restful_services.service.UserService;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
 
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository
+    private UserRepository userRepository;
 @Override
     public User createUser(User user){
-    return null;
+    return userRepository.save(user);
 }
 }
