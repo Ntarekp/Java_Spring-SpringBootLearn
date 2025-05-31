@@ -5,4 +5,6 @@ import org.kaiLearn.springboot_restful_services.entity.User;
 public interface UserService{
    User createUser(User user);
 
+   User getUserById(Long userId);
+
 }
