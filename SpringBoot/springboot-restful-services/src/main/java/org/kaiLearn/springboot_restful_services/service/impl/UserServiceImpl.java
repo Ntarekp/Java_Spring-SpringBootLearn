@@ -6,75 +6,97 @@ import org.kaiLearn.springboot_restful_services.entity.User;
 import org.kaiLearn.springboot_restful_services.mapper.UserMapper;
 import org.kaiLearn.springboot_restful_services.repository.UserRepository;
 import org.kaiLearn.springboot_restful_services.service.UserService;
+import org.modelmapper.ModelMapper;
+// The @Autowired import is typically not needed when using @AllArgsConstructor for constructor injection
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors; // Added for stream operations
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@AllArgsConstructor // Lombok annotation to generate a constructor with all fields, handling injection
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private ModelMapper modelMapper; // ModelMapper is now injected via Lombok's @AllArgsConstructor
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         // Convert UserDTO into User JPA Entity
-        User user = UserMapper.mapToUser(userDTO);
+        // User user = UserMapper.mapToUser(userDTO); // <-- Old way using custom mapper
+        User user = modelMapper.map(userDTO, User.class); // <-- New way using ModelMapper
+
         User savedUser = userRepository.save(user);
+
         // Convert User JPA Entity into UserDTO
-        UserDTO savedUserDTO = UserMapper.mapToUserDTO(savedUser);
+        // UserDTO savedUserDTO = UserMapper.mapToUserDTO(savedUser); // <-- Old way using custom mapper
+        UserDTO savedUserDTO = modelMapper.map(savedUser, UserDTO.class); // <-- New way using ModelMapper
+
         return savedUserDTO;
     }
 
     @Override
-    public List<UserDTO> createUsers(List<UserDTO> userDTOs) { // Renamed parameter for clarity
+    public List<UserDTO> createUsers(List<UserDTO> userDTOs) {
         // Convert list of UserDTOs to list of User entities
-        List<User> users = userDTOs.stream()
-                .map(UserMapper::mapToUser)
+        List<User> usersToSave = userDTOs.stream()
+                // .map(UserMapper::mapToUser) // <-- Old way using custom mapper
+                .map(userDTO -> modelMapper.map(userDTO, User.class)) // <-- New way using ModelMapper
                 .collect(Collectors.toList());
 
         // Save all User entities
-        List<User> savedUsers = userRepository.saveAll(users);
+        List<User> savedUsers = userRepository.saveAll(usersToSave);
 
         // Convert list of saved User entities back to list of UserDTOs
         return savedUsers.stream()
-                .map(UserMapper::mapToUserDTO)
+                // .map(UserMapper::mapToUserDTO) // <-- Old way using custom mapper
+                .map(user -> modelMapper.map(user, UserDTO.class)) // <-- New way using ModelMapper
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO getUserById(Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        User user = optionalUser.get(); // Using .get() as in original, consider error handling in production
-        return UserMapper.mapToUserDTO(user);
+        // In a real application, you'd likely throw an exception if the user isn't found,
+        // instead of just calling .get() on an empty Optional.
+        User user = optionalUser.get();
+
+        // return UserMapper.mapToUserDTO(user); // <-- Old way using custom mapper
+        return modelMapper.map(user, UserDTO.class); // <-- New way using ModelMapper
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         // Convert list of User entities to list of UserDTOs
+        // return users.stream().map(UserMapper::mapToUserDTO) // <-- Old way using custom mapper
+        //         .collect(Collectors.toList());
         return users.stream()
-                .map(UserMapper::mapToUserDTO)
+                .map(user -> modelMapper.map(user, UserDTO.class)) // <-- New way using ModelMapper
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDTO updateUser(UserDTO userDTO) { // Renamed parameter for clarity
+    public UserDTO updateUser(UserDTO userDTO) {
         // Fetch the existing user using the ID from the DTO
-        User existingUser = userRepository.findById(userDTO.getId()).get(); // Using .get() as in original, consider error handling
+        // As above, consider robust error handling (e.g., throwing a custom NotFoundException)
+        User existingUser = userRepository.findById(userDTO.getId()).get();
 
-        // Update the fields of the existing entity with data from the DTO
-        existingUser.setFirstName(userDTO.getFirstName());
-        existingUser.setLastName(userDTO.getLastName());
-        existingUser.setEmail(userDTO.getEmail());
+        // Update the fields of the existing entity with data from the DTO using ModelMapper.
+        // This replaces the need for manual setters like existingUser.setFirstName(userDTO.getFirstName());
+        // modelMapper.map(userDTO, existingUser) effectively updates matching properties from userDTO onto existingUser.
+        // existingUser.setFirstName(userDTO.getFirstName()); // <-- Old way (manual update)
+        // existingUser.setLastName(userDTO.getLastName());   // <-- Old way (manual update)
+        // existingUser.setEmail(userDTO.getEmail());         // <-- Old way (manual update)
+        modelMapper.map(userDTO, existingUser); // <-- New way using ModelMapper to update existing entity
 
         // Save the updated entity
         User updatedUser = userRepository.save(existingUser);
 
         // Convert the updated User entity to UserDTO before returning
-        return UserMapper.mapToUserDTO(updatedUser);
+        // return UserMapper.mapToUserDTO(updatedUser); // <-- Old way using custom mapper
+        return modelMapper.map(updatedUser, UserDTO.class); // <-- New way using ModelMapper
     }
 
     @Override
