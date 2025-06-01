@@ -24,30 +24,30 @@ public class UserController {
        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
     @PostMapping("/batch") // Or a different path like "/multiple" or "/bulk"
-    public ResponseEntity<List<User>> createUsers(@RequestBody List<User> users) {
-        List<User> savedUsers = userService.createUsers(users);
+    public ResponseEntity<List<UserDTO>> createUsers(@RequestBody List<UserDTO> users) {
+        List<UserDTO> savedUsers = userService.createUsers(users);
         return new ResponseEntity<>(savedUsers, HttpStatus.CREATED);
     }
 
     //build get userBy id restApi
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long userId){
-        User user = userService.getUserById(userId);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long userId){
+        UserDTO user = userService.getUserById(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     //Build all users REST API
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users   = userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        List<UserDTO> users   = userService.getAllUsers();
         return  new ResponseEntity<>(users, HttpStatus.OK);
     }
     //Build update User REST API
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Long userId,
-                                           @RequestBody User user){
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long userId,
+                                           @RequestBody UserDTO user){
         user.setId(userId);
-        User updatedUser = userService.updateUser(user);
+        UserDTO updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
     }
 
