@@ -22,6 +22,11 @@ public class UserController {
        User savedUser = userService.createUser(user);
        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
+    @PostMapping("/batch") // Or a different path like "/multiple" or "/bulk"
+    public ResponseEntity<List<User>> createUsers(@RequestBody List<User> users) {
+        List<User> savedUsers = userService.createUsers(users);
+        return new ResponseEntity<>(savedUsers, HttpStatus.CREATED);
+    }
 
     //build get userBy id restApi
     @GetMapping("{id}")
@@ -43,5 +48,13 @@ public class UserController {
         user.setId(userId);
         User updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
+    }
+
+    //Build delete user REST API
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId){
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("User successfully deleted!",HttpStatus.OK);
+
     }
 }

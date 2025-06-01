@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
 }
 
     @Override
+    public List<User> createUsers(List<User> users) {
+        return userRepository.saveAll(users);
+    }
+
+    @Override
     public User getUserById(Long userId) {
     Optional<User> optionalUser = userRepository.findById(userId);
         return optionalUser.get();
@@ -38,4 +43,11 @@ public class UserServiceImpl implements UserService {
         User updatedUser = userRepository.save(existingUser);
         return updatedUser;
     }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+
 }
