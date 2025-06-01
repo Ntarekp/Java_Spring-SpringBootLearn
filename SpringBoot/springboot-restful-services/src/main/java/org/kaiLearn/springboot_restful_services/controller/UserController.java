@@ -33,7 +33,7 @@ public class UserController {
     //Build all users REST API
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users   = userService.ge tAllUsers();
+        List<User> users   = userService.getAllUsers();
         return  new ResponseEntity<>(users, HttpStatus.OK);
     }
     //Build update User REST API
