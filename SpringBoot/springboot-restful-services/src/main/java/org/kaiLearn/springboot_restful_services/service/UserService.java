@@ -1,12 +1,13 @@
 package org.kaiLearn.springboot_restful_services.service;
 
+import org.kaiLearn.springboot_restful_services.dto.UserDTO;
 import org.kaiLearn.springboot_restful_services.entity.User;
 
 import java.util.List;
 
 public interface UserService{
 
-   User createUser(User user);
+   UserDTO createUser(UserDTO user);
    List<User> createUsers(List<User> users);
 
    User getUserById(Long userId);

@@ -1,6 +1,7 @@
 package org.kaiLearn.springboot_restful_services.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.kaiLearn.springboot_restful_services.dto.UserDTO;
 import org.kaiLearn.springboot_restful_services.entity.User;
 import org.kaiLearn.springboot_restful_services.repository.UserRepository;
 import org.kaiLearn.springboot_restful_services.service.UserService;
@@ -15,8 +16,26 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 @Override
-    public User createUser(User user){
-    return userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO){
+
+    //Convert UserDTO into User JPA Entity
+    User user = new User(
+            userDTO.getId(),
+            userDTO.getFirstName(),
+            userDTO.getLastName(),
+            userDTO.getEmail()
+
+    );
+    User savedUser= userRepository.save(user);
+
+    //Convert User JPA Entity into userDTO
+    UserDTO savedUserDTO  = new UserDTO(
+            savedUser.getId(),
+            savedUser.getFirstName(),
+            savedUser.getLastName(),
+            savedUser.getEmail()
+    );
+    return savedUserDTO;
 }
 
     @Override

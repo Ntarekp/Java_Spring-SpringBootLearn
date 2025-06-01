@@ -1,6 +1,7 @@
 package org.kaiLearn.springboot_restful_services.controller;
 
 import lombok.AllArgsConstructor;
+import org.kaiLearn.springboot_restful_services.dto.UserDTO;
 import org.kaiLearn.springboot_restful_services.entity.User;
 import org.kaiLearn.springboot_restful_services.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class UserController {
 
     //build create user REST API
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
-       User savedUser = userService.createUser(user);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user){
+       UserDTO savedUser = userService.createUser(user);
        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
     @PostMapping("/batch") // Or a different path like "/multiple" or "/bulk"
