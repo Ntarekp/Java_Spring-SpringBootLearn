@@ -3,6 +3,7 @@ package org.kaiLearn.springboot_restful_services.service.impl;
 import lombok.AllArgsConstructor;
 import org.kaiLearn.springboot_restful_services.dto.UserDTO;
 import org.kaiLearn.springboot_restful_services.entity.User;
+import org.kaiLearn.springboot_restful_services.mapper.UserMapper;
 import org.kaiLearn.springboot_restful_services.repository.UserRepository;
 import org.kaiLearn.springboot_restful_services.service.UserService;
 import org.springframework.stereotype.Service;
@@ -19,22 +20,11 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO){
 
     //Convert UserDTO into User JPA Entity
-    User user = new User(
-            userDTO.getId(),
-            userDTO.getFirstName(),
-            userDTO.getLastName(),
-            userDTO.getEmail()
-
-    );
+    User user = UserMapper.mapToUser(userDTO);
     User savedUser= userRepository.save(user);
 
     //Convert User JPA Entity into userDTO
-    UserDTO savedUserDTO  = new UserDTO(
-            savedUser.getId(),
-            savedUser.getFirstName(),
-            savedUser.getLastName(),
-            savedUser.getEmail()
-    );
+    UserDTO savedUserDTO = UserMapper.mapToUserDTO(savedUser);
     return savedUserDTO;
 }
 
