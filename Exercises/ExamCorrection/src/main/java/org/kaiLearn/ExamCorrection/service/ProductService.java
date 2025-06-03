@@ -1,5 +1,7 @@
 package org.kaiLearn.ExamCorrection.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.kaiLearn.ExamCorrection.entity.Product;
 import org.kaiLearn.ExamCorrection.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
+@NoArgsConstructor
 public class ProductService {
     private ProductRepository productRepository;
 
