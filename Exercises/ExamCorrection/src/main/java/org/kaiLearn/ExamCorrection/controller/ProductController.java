@@ -1,8 +1,6 @@
 package org.kaiLearn.ExamCorrection.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.kaiLearn.ExamCorrection.entity.Product;
 import org.kaiLearn.ExamCorrection.service.ProductService;
 import org.springframework.http.RequestEntity;
@@ -13,15 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/products")
-@NoArgsConstructor
+@AllArgsConstructor
 
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
-    public  ProductController(ProductService productService){
-        this.productService = productService;
-    }
+
 
     //Create
     @PostMapping
