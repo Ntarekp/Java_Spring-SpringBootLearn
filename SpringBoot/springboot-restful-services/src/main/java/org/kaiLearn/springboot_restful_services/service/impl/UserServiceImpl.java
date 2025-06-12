@@ -3,6 +3,7 @@ package org.kaiLearn.springboot_restful_services.service.impl;
 import lombok.AllArgsConstructor;
 import org.kaiLearn.springboot_restful_services.dto.UserDTO;
 import org.kaiLearn.springboot_restful_services.entity.User;
+import org.kaiLearn.springboot_restful_services.exception.ResourceNotFoundException;
 import org.kaiLearn.springboot_restful_services.mapper.UserMapper;
 import org.kaiLearn.springboot_restful_services.repository.UserRepository;
 import org.kaiLearn.springboot_restful_services.service.UserService;
@@ -12,15 +13,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor // Lombok annotation to generate a constructor with all fields, handling injection
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private ModelMapper modelMapper; // ModelMapper is now injected via Lombok's @AllArgsConstructor
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper; // ModelMapper is now injected via Lombok's @AllArgsConstructor
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
@@ -57,10 +57,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", userId)
+        );
         // In a real application, you'd likely throw an exception if the user isn't found,
         // instead of just calling .get() on an empty Optional.
-        User user = optionalUser.get();
+        // User user = optionalUser.get(); // no longer required
 
         // return UserMapper.mapToUserDTO(user); // <-- Old way using custom mapper
         return modelMapper.map(user, UserDTO.class); // <-- New way using ModelMapper
@@ -81,7 +83,9 @@ public class UserServiceImpl implements UserService {
     public UserDTO updateUser(UserDTO userDTO) {
         // Fetch the existing user using the ID from the DTO
         // As above, consider robust error handling (e.g., throwing a custom NotFoundException)
-        User existingUser = userRepository.findById(userDTO.getId()).get();
+        User existingUser = userRepository.findById(userDTO.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", userDTO.getId())
+        );
 
         // Update the fields of the existing entity with data from the DTO using ModelMapper.
         // This replaces the need for manual setters like existingUser.setFirstName(userDTO.getFirstName());
@@ -101,6 +105,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
+        // First check if the user exists before attempting to delete
+        if (!userRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("User", "id", userId);
+        }
         userRepository.deleteById(userId);
     }
 }
